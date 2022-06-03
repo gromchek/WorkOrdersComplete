@@ -98,7 +98,8 @@ NS.UI.cfg = {
 								if k <= numItems then
 									local IconOnEnter = function( self )
 										GameTooltip:SetOwner( self, "ANCHOR_RIGHT" );
-										GameTooltip:SetText( "|T" .. NS.buildingInfo[items[k]["name"]].icon .. ":16|t " .. items[k]["name"] );
+										GameTooltip:SetText( "|T" .. NS.buildingInfo[items[k]["id"]].icon .. ":16|t " .. items[k]["name"] );
+										GameTooltip:SetText( items[k]["name"])
 										for _,c in ipairs( items[k]["characters"] ) do
 											local cn = NS.db["showCharacterRealms"] and c["name"] or strsplit( "-", c["name"], 2 );
 											GameTooltip:AddLine( cn, HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b );
@@ -108,7 +109,8 @@ NS.UI.cfg = {
 									end
 									local DataButtonOnEnter = function( self, column )
 										GameTooltip:SetOwner( self, "ANCHOR_TOP" );
-										GameTooltip:SetText( "|T" .. NS.buildingInfo[items[k]["name"]].icon .. ":16|t " .. items[k]["name"] .. " - " .. column );
+										GameTooltip:SetText( "|T" .. NS.buildingInfo[items[k]["id"]].icon .. ":16|t " .. items[k]["name"] .. " - " .. column );
+										GameTooltip:SetText( items[k]["name"] .. " - " .. column)
 										for _,c in ipairs( items[k]["characters"] ) do
 											local cn = NS.db["showCharacterRealms"] and c["name"] or strsplit( "-", c["name"], 2 );
 											if column == "Ready" then
@@ -130,7 +132,7 @@ NS.UI.cfg = {
 										GameTooltip_Hide();
 										b:UnlockHighlight();
 									end
-									_G[bn .. "_IconTexture"]:SetNormalTexture( NS.buildingInfo[items[k]["name"]].icon );
+									_G[bn .. "_IconTexture"]:SetNormalTexture( NS.buildingInfo[items[k]["id"]].icon );
 									_G[bn .. "_IconTexture"]:SetScript( "OnEnter", IconOnEnter );
 									_G[bn .. "_IconTexture"]:SetScript( "OnLeave", OnLeave );
 									--
@@ -214,7 +216,7 @@ NS.UI.cfg = {
 						local cn = NS.db["showCharacterRealms"] and NS.currentCharacter.name or strsplit( "-", NS.currentCharacter.name, 2 );
 						GameTooltip:SetText( cn .. " - " .. L["Ready for pickup"] );
 						for _,building in ipairs( NS.currentCharacter.buildings ) do
-							GameTooltip:AddDoubleLine( "|T" .. NS.buildingInfo[building["name"]].icon .. ":16|t " .. NS.FactionBuildingName( NS.currentCharacter.faction, building["name"] ), building["ordersReady"], HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, BATTLENET_FONT_COLOR.r, BATTLENET_FONT_COLOR.g, BATTLENET_FONT_COLOR.b );
+							GameTooltip:AddDoubleLine( "|T" .. NS.buildingInfo[building["id"]].icon .. ":16|t " .. NS.FactionBuildingName( NS.currentCharacter.faction, building["name"] ), building["ordersReady"], HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, BATTLENET_FONT_COLOR.r, BATTLENET_FONT_COLOR.g, BATTLENET_FONT_COLOR.b );
 						end
 						if NS.currentCharacter.garrisonCache["gCache"] then -- Character has a cache and it's being monitored
 							GameTooltip:AddDoubleLine( "|TInterface\\ICONS\\inv_garrison_resource:16|t " .. L["Garrison Cache"], NS.currentCharacter.garrisonCache["gCache"], HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, BATTLENET_FONT_COLOR.r, BATTLENET_FONT_COLOR.g, BATTLENET_FONT_COLOR.b );
@@ -235,7 +237,7 @@ NS.UI.cfg = {
 						local cn = NS.db["showCharacterRealms"] and NS.currentCharacter.name or strsplit( "-", NS.currentCharacter.name, 2 );
 						GameTooltip:SetText( cn .. " - " .. L["Time Remaining"] );
 						for _,building in ipairs( NS.currentCharacter.buildings ) do -- Adding all buildings that are being monitored
-							GameTooltip:AddDoubleLine( "|T" .. NS.buildingInfo[building["name"]].icon .. ":16|t " .. NS.FactionBuildingName( NS.currentCharacter.faction, building["name"] ), NS.SecondsToStrTime( building["ordersOutSeconds"] ), HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, GREEN_FONT_COLOR.r, GREEN_FONT_COLOR.g, GREEN_FONT_COLOR.b );
+							GameTooltip:AddDoubleLine( "|T" .. NS.buildingInfo[building["id"]].icon .. ":16|t " .. NS.FactionBuildingName( NS.currentCharacter.faction, building["name"] ), NS.SecondsToStrTime( building["ordersOutSeconds"] ), HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, GREEN_FONT_COLOR.r, GREEN_FONT_COLOR.g, GREEN_FONT_COLOR.b );
 						end
 						if NS.currentCharacter.garrisonCache["gCache"] then -- Character has a cache and it's being monitored
 							GameTooltip:AddDoubleLine( "|TInterface\\ICONS\\inv_garrison_resource:16|t " .. L["Garrison Cache"], NS.SecondsToStrTime( NS.currentCharacter.nextOutFullSeconds.garrisonCache ), HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, GREEN_FONT_COLOR.r, GREEN_FONT_COLOR.g, GREEN_FONT_COLOR.b );
@@ -403,8 +405,9 @@ NS.UI.cfg = {
 					local cbn = sfn .. "BuildingCheckButton" .. i; -- Check Button Name
 					if i <= #NS.db["characters"][NS.selectedCharacterKey]["buildings"] then
 						local buildingName = NS.db["characters"][NS.selectedCharacterKey]["buildings"][i]["name"];
+						local buildingID = NS.db["characters"][NS.selectedCharacterKey]["buildings"][i]["id"];
 						_G[cbn]:SetChecked( NS.db["characters"][NS.selectedCharacterKey]["monitor"][buildingName] );
-						_G[cbn .. "Text"]:SetText( "|T" .. NS.buildingInfo[buildingName].icon .. ":16|t " .. NS.FactionBuildingName( NS.db["characters"][NS.selectedCharacterKey]["faction"], buildingName ) );
+						_G[cbn .. "Text"]:SetText( "|T" .. NS.buildingInfo[buildingID].icon .. ":16|t " .. NS.FactionBuildingName( NS.db["characters"][NS.selectedCharacterKey]["faction"], buildingName ) );
 						_G[cbn].buildingName = buildingName; -- Used in OnClick to set monitor boolean
 						_G[cbn]:Show();
 					else

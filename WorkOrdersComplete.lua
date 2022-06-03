@@ -23,7 +23,7 @@ NS.allCharacters = {
 --
 NS.currentCharacter = {
 	name = UnitName( "player" ) .. "-" .. GetRealmName(),
-	race = UnitRace( "player" ),
+	race = select(2, UnitRace( "player" )),
 	sex = UnitSex( "player" ) == 2 and "male" or "female", -- unknown = 1, male = 2, female = 3 / Players will only be male or female
 	faction = UnitFactionGroup( "player" ), -- Updated later with character for Pandaren
 	key = nil,
@@ -60,6 +60,7 @@ NS.currentCharacter.TexCoords = function()
 		["Horde:Tauren"] = { male = { 7, 4 }, female = { 7, 3 } },
 		["Horde:Troll"] = { male = { 7, 6 }, female = { 7, 5 } },
 		["Horde:Undead"] = { male = { 8, 1 }, female = { 7, 7 } },
+		["Horde:Scourge"] = { male = { 8, 1 }, female = { 7, 7 } },
 		["Horde:Pandaren"] = { male = { 7, 2 }, female = { 7, 1 } },
 		-- Horde Allied Races
 		["Horde:Nightborne"] = { male = { 6, 3 }, female = { 6, 2 } },
@@ -85,38 +86,84 @@ NS.buildingInfo = {
 	--
 	-- Small - 4
 	--
-	["Gem Boutique"] = { icon = "Interface\\ICONS\\inv_misc_gem_01", type = 4 },
+	[96] = { icon = "Interface\\ICONS\\inv_misc_gem_01", type = 4 },
+	[131] = { icon = "Interface\\ICONS\\inv_misc_gem_01", type = 4 },
+	[132] = { icon = "Interface\\ICONS\\inv_misc_gem_01", type = 4 },
 	--["Salvage Yard"]
 	--["Storehouse"]
-	["Alchemy Lab"] = { icon = "Interface\\ICONS\\trade_alchemy", type = 4 },
-	["Enchanter's Study"] = { icon = "Interface\\ICONS\\trade_engraving", type = 4 },
-	["Engineering Works"] = { icon = "Interface\\ICONS\\trade_engineering", type = 4 },
-	["Scribe's Quarters"] = { icon = "Interface\\ICONS\\inv_inscription_tradeskill01", type = 4 },
-	["Tailoring Emporium"] = { icon = "Interface\\ICONS\\trade_tailoring", type = 4 },
-	["The Forge"] = { icon = "Interface\\ICONS\\trade_blacksmithing", type = 4 },
-	["The Tannery"] = { icon = "Interface\\ICONS\\inv_misc_armorkit_17", type = 4 },
+	[76] = { icon = "Interface\\ICONS\\trade_alchemy", type = 4 },
+	[119] = { icon = "Interface\\ICONS\\trade_alchemy", type = 4 },
+	[120] = { icon = "Interface\\ICONS\\trade_alchemy", type = 4 },
+
+	[93] = { icon = "Interface\\ICONS\\trade_engraving", type = 4 },
+	[125] = { icon = "Interface\\ICONS\\trade_engraving", type = 4 },
+	[126] = { icon = "Interface\\ICONS\\trade_engraving", type = 4 },
+
+	[91] = { icon = "Interface\\ICONS\\trade_engineering", type = 4 },
+	[123] = { icon = "Interface\\ICONS\\trade_engineering", type = 4 },
+	[124] = { icon = "Interface\\ICONS\\trade_engineering", type = 4 },
+
+	[95] = { icon = "Interface\\ICONS\\inv_inscription_tradeskill01", type = 4 },
+	[129] = { icon = "Interface\\ICONS\\inv_inscription_tradeskill01", type = 4 },
+	[130] = { icon = "Interface\\ICONS\\inv_inscription_tradeskill01", type = 4 },
+
+	[94] = { icon = "Interface\\ICONS\\trade_tailoring", type = 4 },
+	[127] = { icon = "Interface\\ICONS\\trade_tailoring", type = 4 },
+	[128] = { icon = "Interface\\ICONS\\trade_tailoring", type = 4 },
+
+	[60] = { icon = "Interface\\ICONS\\trade_blacksmithing", type = 4 },
+	[117] = { icon = "Interface\\ICONS\\trade_blacksmithing", type = 4 },
+	[118] = { icon = "Interface\\ICONS\\trade_blacksmithing", type = 4 },
+
+	[90] = { icon = "Interface\\ICONS\\inv_misc_armorkit_17", type = 4 },
+	[121] = { icon = "Interface\\ICONS\\inv_misc_armorkit_17", type = 4 },
+	[122] = { icon = "Interface\\ICONS\\inv_misc_armorkit_17", type = 4 },
 	--
 	-- Medium - 3
 	--
 	--["Lunarfall Inn"]
 	--["Frostwall Tavern"]
-	["Trading Post"] = { icon = "Interface\\ICONS\\garrison_building_tradingpost", type =3 },
-	["Barn"] = { icon = "Interface\\ICONS\\garrison_building_barn", type = 3 },
-	["Gladiator's Sanctum"] = { icon = "Interface\\ICONS\\garrison_building_sparringarena", type = 3 },
-	["Lumber Mill"] = { icon = "Interface\\ICONS\\garrison_building_lumbermill", type = 3 },
+	[111] = { icon = "Interface\\ICONS\\garrison_building_tradingpost", type =3 },
+	[144] = { icon = "Interface\\ICONS\\garrison_building_tradingpost", type =3 },
+	[145] = { icon = "Interface\\ICONS\\garrison_building_tradingpost", type =3 },
+
+	[24] = { icon = "Interface\\ICONS\\garrison_building_barn", type = 3 },
+	[25] = { icon = "Interface\\ICONS\\garrison_building_barn", type = 3 },
+	[133] = { icon = "Interface\\ICONS\\garrison_building_barn", type = 3 },
+
+	[159] = { icon = "Interface\\ICONS\\garrison_building_sparringarena", type = 3 },
+	[160] = { icon = "Interface\\ICONS\\garrison_building_sparringarena", type = 3 },
+	[161] = { icon = "Interface\\ICONS\\garrison_building_sparringarena", type = 3 },
+
+	[40] = { icon = "Interface\\ICONS\\garrison_building_lumbermill", type = 3 },
+	[41] = { icon = "Interface\\ICONS\\garrison_building_lumbermill", type = 3 },
+	[138] = { icon = "Interface\\ICONS\\garrison_building_lumbermill", type = 3 },
 	--
 	-- Large - 2
 	--
 	--["Barracks"]
-	["Dwarven Bunker / War Mill"] =  { icon = "Interface\\ICONS\\garrison_building_armory", type = 2 },
-	["Gnomish Gearworks / Goblin Workshop"] = { icon = "Interface\\ICONS\\garrison_building_workshop", type = 2 },
-	["Mage Tower / Spirit Lodge"] = { icon = "Interface\\ICONS\\garrison_building_magetower", type = 2 },
+	[8] =  { icon = "Interface\\ICONS\\garrison_building_armory", type = 2 },
+	[9] =  { icon = "Interface\\ICONS\\garrison_building_armory", type = 2 },
+	[10] =  { icon = "Interface\\ICONS\\garrison_building_armory", type = 2 },
+
+	[162] = { icon = "Interface\\ICONS\\garrison_building_workshop", type = 2 },
+	[163] = { icon = "Interface\\ICONS\\garrison_building_workshop", type = 2 },
+	[164] = { icon = "Interface\\ICONS\\garrison_building_workshop", type = 2 },
+
+	[37] = { icon = "Interface\\ICONS\\garrison_building_magetower", type = 2 },
+	[38] = { icon = "Interface\\ICONS\\garrison_building_magetower", type = 2 },
+	[39] = { icon = "Interface\\ICONS\\garrison_building_magetower", type = 2 },
 	--["Stables"]
 	--
 	-- Prebuilt - 1
 	--
-	["Lunarfall Excavation / Frostwall Mines"] = { icon = "Interface\\ICONS\\trade_mining", type = 1 },
-	["Herb Garden"] = { icon = "Interface\\ICONS\\inv_misc_herb_sansamroot", type = 1 },
+	[61] = { icon = "Interface\\ICONS\\trade_mining", type = 1 },
+	[62] = { icon = "Interface\\ICONS\\trade_mining", type = 1 },
+	[63] = { icon = "Interface\\ICONS\\trade_mining", type = 1 },
+
+	[29] = { icon = "Interface\\ICONS\\inv_misc_herb_sansamroot", type = 1 },
+	[136] = { icon = "Interface\\ICONS\\inv_misc_herb_sansamroot", type = 1 },
+	[137] = { icon = "Interface\\ICONS\\inv_misc_herb_sansamroot", type = 1 },
 	--["Pet Menagerie"]
 	--["Fishing Shack"]
 };
@@ -329,11 +376,11 @@ NS.UpdateCharacter = function()
 		local buildingID,buildingName,_,_,_,rank,_,_,_,_,_,_,_,_,_,_,_,_,_,_,isBeingBuilt,_,_,_,_ = C_Garrison.GetOwnedBuildingInfo( building.plotID );
 		local _,_,shipmentCapacity,shipmentsReady,shipmentsTotal,_,duration,timeleftString,_,_,_,_ = C_Garrison.GetLandingPageShipmentInfo( buildingID );
 		buildingName = NS.BuildingName( buildingName ); -- Resolves shared names
-		if shipmentCapacity and NS.buildingInfo[buildingName] then -- Only store expected buildings with Work Orders
+		if shipmentCapacity and NS.buildingInfo[buildingID] then -- Only store expected buildings with Work Orders
 			table.insert( NS.db["characters"][k]["buildings"], {
 				["id"] = buildingID,											-- 145, etc.
 				["name"] = buildingName,										-- Trading Post, etc.
-				["type"] = NS.buildingInfo[buildingName].type,					-- 1, 2, 3, 4 ( Prebuilt, Large, Medium, Small )
+				["type"] = NS.buildingInfo[buildingID].type,					-- 1, 2, 3, 4 ( Prebuilt, Large, Medium, Small )
 				["ordersCapacity"] = shipmentCapacity,
 				["ordersReady"] = shipmentsReady,								-- nil if no orders
 				["ordersTotal"] = shipmentsTotal,								-- nil if no orders
@@ -400,6 +447,7 @@ NS.UpdateBuildings = function()
 				if not buildings[k] then
 					buildings[k] = {
 						["name"] = b["name"],
+						["id"] = b["id"],
 						["characters"] = {},
 						["ordersReady"] = 0,
 						["ordersInProgress"] = 0,
