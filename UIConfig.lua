@@ -216,7 +216,9 @@ NS.UI.cfg = {
 						local cn = NS.db["showCharacterRealms"] and NS.currentCharacter.name or strsplit( "-", NS.currentCharacter.name, 2 );
 						GameTooltip:SetText( cn .. " - " .. L["Ready for pickup"] );
 						for _,building in ipairs( NS.currentCharacter.buildings ) do
-							GameTooltip:AddDoubleLine( "|T" .. NS.buildingInfo[building["id"]].icon .. ":16|t " .. NS.FactionBuildingName( NS.currentCharacter.faction, building["name"] ), building["ordersReady"], HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, BATTLENET_FONT_COLOR.r, BATTLENET_FONT_COLOR.g, BATTLENET_FONT_COLOR.b );
+							if building["id"] then
+								GameTooltip:AddDoubleLine( "|T" .. NS.buildingInfo[building["id"]].icon .. ":16|t " .. NS.FactionBuildingName( NS.currentCharacter.faction, building["name"] ), building["ordersReady"], HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, BATTLENET_FONT_COLOR.r, BATTLENET_FONT_COLOR.g, BATTLENET_FONT_COLOR.b );
+							end
 						end
 						if NS.currentCharacter.garrisonCache["gCache"] then -- Character has a cache and it's being monitored
 							GameTooltip:AddDoubleLine( "|TInterface\\ICONS\\inv_garrison_resource:16|t " .. L["Garrison Cache"], NS.currentCharacter.garrisonCache["gCache"], HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, BATTLENET_FONT_COLOR.r, BATTLENET_FONT_COLOR.g, BATTLENET_FONT_COLOR.b );
@@ -237,7 +239,9 @@ NS.UI.cfg = {
 						local cn = NS.db["showCharacterRealms"] and NS.currentCharacter.name or strsplit( "-", NS.currentCharacter.name, 2 );
 						GameTooltip:SetText( cn .. " - " .. L["Time Remaining"] );
 						for _,building in ipairs( NS.currentCharacter.buildings ) do -- Adding all buildings that are being monitored
-							GameTooltip:AddDoubleLine( "|T" .. NS.buildingInfo[building["id"]].icon .. ":16|t " .. NS.FactionBuildingName( NS.currentCharacter.faction, building["name"] ), NS.SecondsToStrTime( building["ordersOutSeconds"] ), HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, GREEN_FONT_COLOR.r, GREEN_FONT_COLOR.g, GREEN_FONT_COLOR.b );
+							if building["id"] then
+								GameTooltip:AddDoubleLine( "|T" .. NS.buildingInfo[building["id"]].icon .. ":16|t " .. NS.FactionBuildingName( NS.currentCharacter.faction, building["name"] ), NS.SecondsToStrTime( building["ordersOutSeconds"] ), HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, GREEN_FONT_COLOR.r, GREEN_FONT_COLOR.g, GREEN_FONT_COLOR.b );
+							end
 						end
 						if NS.currentCharacter.garrisonCache["gCache"] then -- Character has a cache and it's being monitored
 							GameTooltip:AddDoubleLine( "|TInterface\\ICONS\\inv_garrison_resource:16|t " .. L["Garrison Cache"], NS.SecondsToStrTime( NS.currentCharacter.nextOutFullSeconds.garrisonCache ), HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, GREEN_FONT_COLOR.r, GREEN_FONT_COLOR.g, GREEN_FONT_COLOR.b );
